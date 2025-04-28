@@ -83,31 +83,31 @@
 
         function talkToUnik() {
     const responses = [
-        "Привіт! Я допоможу тобі вибрати університет!",
-        "Я можу підказати тобі про спеціальності та бюджет.",
-        "Хочеш розповім про перспективні професії?",
-        "Я тут, щоб відповісти на твої питання!"
+        "Hello! I will help you choose a university!",
+        "I can tell you about specialties and budgets.",
+        "Do you want to know about promising professions?",
+        "I'm here to answer your questions!"
     ];
     const randomIndex = Math.floor(Math.random() * responses.length);
     const unikResponse = responses[randomIndex];
 
     const p = document.createElement('p');
-    p.textContent = "Унік: " + unikResponse;
+    p.textContent = "Uniq: " + unikResponse;
     messagesDiv.appendChild(p);
 
-    // Голос Уніка
+    // Voice for English
     const utterance = new SpeechSynthesisUtterance(unikResponse);
-    utterance.lang = 'uk-UA';
+    utterance.lang = 'en-US';  // Use 'en-US' for American English
 
-    // Перевірка голосів
+    // Check available voices
     const voices = speechSynthesis.getVoices();
-    const ukVoice = voices.find(voice => voice.lang === 'uk-UA');
-    if (ukVoice) {
-        utterance.voice = ukVoice;
+    const enVoice = voices.find(voice => voice.lang === 'en-US');
+    if (enVoice) {
+        utterance.voice = enVoice;
     }
 
-    utterance.rate = 1;  // нормальна швидкість
-    utterance.pitch = 1; // нормальний тон
+    utterance.rate = 1;  // normal speed
+    utterance.pitch = 1; // normal pitch
 
     speechSynthesis.speak(utterance);
 }
