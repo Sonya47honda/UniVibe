@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Унік — твій помічник</title>
+    <title>Unik — your assistant</title>
     <style>
         body {
             margin: 0;
@@ -65,28 +65,44 @@
 <body>
 
     <header>
-        <h1>Hi! I'm Unik</h1>
+        <h1>Hello! I'm Unik</h1>
         <div class="unik-avatar">
-            <img src="unik.png" alt="Унік" id="unik-face">
+            <img src="unik.png" alt="Unik" id="unik-face">
         </div>
     </header>
 
     <button class="talk-button" onclick="talkToUnik()">Talk to Unik</button>
 
     <div class="messages" id="messages">
-        <p>Press the button to start chatting!</p>
+        <p>Press the button to start talking!</p>
     </div>
 
     <script>
-        const messagesDiv = document.getElementById('messages');
+        let enVoice = null;
+
+        function setVoice() {
+            const voices = speechSynthesis.getVoices();
+            enVoice = voices.find(voice => voice.lang.includes('en') && voice.name.includes('Google'));
+            if (!enVoice) {
+                enVoice = voices.find(voice => voice.lang.includes('en'));
+            }
+            console.log('Selected voice:', enVoice ? enVoice.name : 'Default');
+        }
 
         function talkToUnik() {
+            if (!enVoice) {
+                console.log("Voices not loaded yet!");
+                return;
+            }
+
+            const messagesDiv = document.getElementById('messages');
             const responses = [
-                "Hi there! I can help you choose a university!",
-                "I can tell you about different majors and scholarships.",
-                "Would you like me to tell you about the most promising professions?",
-                "I'm here to answer your questions!"
+                "Hi there! I can help you choose your university!",
+                "I can suggest the best majors and scholarship options.",
+                "Would you like to hear about promising careers?",
+                "I'm here to answer all your questions!"
             ];
+
             const randomIndex = Math.floor(Math.random() * responses.length);
             const unikResponse = responses[randomIndex];
 
@@ -94,27 +110,20 @@
             p.textContent = "Unik: " + unikResponse;
             messagesDiv.appendChild(p);
 
-            // Голос Уніка
             const utterance = new SpeechSynthesisUtterance(unikResponse);
-
-            // Завантажуємо голоси тільки після першого натискання
-            const voices = speechSynthesis.getVoices();
-            const enVoice = voices.find(voice => voice.lang.includes('en'));
-
-            if (enVoice) {
-                utterance.voice = enVoice;
-                utterance.lang = 'en-US';
-            } else {
-                console.log("English voice not found, using default voice.");
-                utterance.lang = 'en-US';
-            }
+            utterance.voice = enVoice;
+            utterance.lang = 'en-US';
 
             speechSynthesis.speak(utterance);
         }
 
-        // Виправлення проблеми з отриманням голосів одразу
-        if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = () => {};
+        window.speechSynthesis.onvoiceschanged = () => {
+            setVoice();
+        };
+
+        // Якщо голоси вже є, завантажити відразу
+        if (speechSynthesis.getVoices().length > 0) {
+            setVoice();
         }
     </script>
 
