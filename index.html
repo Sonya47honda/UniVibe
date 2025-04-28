@@ -99,6 +99,16 @@
             const utterance = new SpeechSynthesisUtterance(unikResponse);
             utterance.lang = 'uk-UA';
             speechSynthesis.speak(utterance);
+            const voices = speechSynthesis.getVoices();
+console.log(voices);  // виведе список доступних голосів в консолі
+
+// Вибір першого українського голосу, якщо він є:
+const ukVoice = voices.find(voice => voice.lang === 'uk-UA');
+if (ukVoice) {
+    utterance.voice = ukVoice;
+}
+            utterance.rate = 1;  // нормальна швидкість
+utterance.pitch = 1; // нормальний тон
 
             // Тут потім можна буде ще вставити зміну аватара, щоб рот відкривався
         }
