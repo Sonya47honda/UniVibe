@@ -82,33 +82,36 @@
         const messagesDiv = document.getElementById('messages');
 
         function talkToUnik() {
-            const responses = [
-                "Привіт! Я допоможу тобі вибрати університет!",
-                "Я можу підказати тобі про спеціальності та бюджет.",
-                "Хочеш розповім про перспективні професії?",
-                "Я тут, щоб відповісти на твої питання!"
-            ];
-            const randomIndex = Math.floor(Math.random() * responses.length);
-            const unikResponse = responses[randomIndex];
+    const responses = [
+        "Привіт! Я допоможу тобі вибрати університет!",
+        "Я можу підказати тобі про спеціальності та бюджет.",
+        "Хочеш розповім про перспективні професії?",
+        "Я тут, щоб відповісти на твої питання!"
+    ];
+    const randomIndex = Math.floor(Math.random() * responses.length);
+    const unikResponse = responses[randomIndex];
 
-            const p = document.createElement('p');
-            p.textContent = "Унік: " + unikResponse;
-            messagesDiv.appendChild(p);
+    const p = document.createElement('p');
+    p.textContent = "Унік: " + unikResponse;
+    messagesDiv.appendChild(p);
 
-            // Голос Уніка
-            const utterance = new SpeechSynthesisUtterance(unikResponse);
-            utterance.lang = 'uk-UA';
-            speechSynthesis.speak(utterance);
-            const voices = speechSynthesis.getVoices();
-console.log(voices);  // виведе список доступних голосів в консолі
+    // Голос Уніка
+    const utterance = new SpeechSynthesisUtterance(unikResponse);
+    utterance.lang = 'uk-UA';
 
-// Вибір першого українського голосу, якщо він є:
-const ukVoice = voices.find(voice => voice.lang === 'uk-UA');
-if (ukVoice) {
-    utterance.voice = ukVoice;
+    // Перевірка голосів
+    const voices = speechSynthesis.getVoices();
+    const ukVoice = voices.find(voice => voice.lang === 'uk-UA');
+    if (ukVoice) {
+        utterance.voice = ukVoice;
+    }
+
+    utterance.rate = 1;  // нормальна швидкість
+    utterance.pitch = 1; // нормальний тон
+
+    speechSynthesis.speak(utterance);
 }
-            utterance.rate = 1;  // нормальна швидкість
-utterance.pitch = 1; // нормальний тон
+
 
             // Тут потім можна буде ще вставити зміну аватара, щоб рот відкривався
         }
