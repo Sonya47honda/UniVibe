@@ -82,36 +82,23 @@
         const messagesDiv = document.getElementById('messages');
 
         function talkToUnik() {
-    const responses = [
-        "Hello! I will help you choose a university!",
-        "I can tell you about specialties and budgets.",
-        "Do you want to know about promising professions?",
-        "I'm here to answer your questions!"
-    ];
-    const randomIndex = Math.floor(Math.random() * responses.length);
-    const unikResponse = responses[randomIndex];
+            const responses = [
+                "Привіт! Я допоможу тобі вибрати університет!",
+                "Я можу підказати тобі про спеціальності та бюджет.",
+                "Хочеш розповім про перспективні професії?",
+                "Я тут, щоб відповісти на твої питання!"
+            ];
+            const randomIndex = Math.floor(Math.random() * responses.length);
+            const unikResponse = responses[randomIndex];
 
-    const p = document.createElement('p');
-    p.textContent = "Uniq: " + unikResponse;
-    messagesDiv.appendChild(p);
+            const p = document.createElement('p');
+            p.textContent = "Унік: " + unikResponse;
+            messagesDiv.appendChild(p);
 
-    // Voice for English
-    const utterance = new SpeechSynthesisUtterance(unikResponse);
-    utterance.lang = 'en-US';  // Use 'en-US' for American English
-
-    // Check available voices
-    const voices = speechSynthesis.getVoices();
-    const enVoice = voices.find(voice => voice.lang === 'en-US');
-    if (enVoice) {
-        utterance.voice = enVoice;
-    }
-
-    utterance.rate = 1;  // normal speed
-    utterance.pitch = 1; // normal pitch
-
-    speechSynthesis.speak(utterance);
-}
-
+            // Голос Уніка
+            const utterance = new SpeechSynthesisUtterance(unikResponse);
+            utterance.lang = 'uk-UA';
+            speechSynthesis.speak(utterance);
 
             // Тут потім можна буде ще вставити зміну аватара, щоб рот відкривався
         }
