@@ -1,17 +1,108 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UniVibe Асистент</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Унік — твій помічник</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, #8EC5FC, #E0C3FC);
+        }
+        header {
+            margin-top: 30px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            color: #333;
+        }
+        .unik-avatar {
+            margin-top: 20px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #fff;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .unik-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .talk-button {
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #6A5ACD;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .talk-button:hover {
+            background-color: #5a4dbd;
+        }
+        .messages {
+            margin-top: 40px;
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 <body>
-  <h1>UniVibe</h1>
-  <p>Голосовий помічник для вибору майбутнього!</p>
 
-  <button onclick="startAssistant()">Поговорити з асистентом</button>
+    <header>
+        <h1>Привіт! Я Унік</h1>
+        <div class="unik-avatar">
+            <!-- Коли буде зображення — додаси шлях у src -->
+            <img src="unik.png" alt="Унік" id="unik-face">
+        </div>
+    </header>
 
-  <script src="script.js"></script>
+    <button class="talk-button" onclick="talkToUnik()">Говорити з Уніком</button>
+
+    <div class="messages" id="messages">
+        <p>Натисни кнопку, щоб поспілкуватися!</p>
+    </div>
+
+    <script>
+        const messagesDiv = document.getElementById('messages');
+
+        function talkToUnik() {
+            const responses = [
+                "Привіт! Я допоможу тобі вибрати університет!",
+                "Я можу підказати тобі про спеціальності та бюджет.",
+                "Хочеш розповім про перспективні професії?",
+                "Я тут, щоб відповісти на твої питання!"
+            ];
+            const randomIndex = Math.floor(Math.random() * responses.length);
+            const unikResponse = responses[randomIndex];
+
+            const p = document.createElement('p');
+            p.textContent = "Унік: " + unikResponse;
+            messagesDiv.appendChild(p);
+
+            // Голос Уніка
+            const utterance = new SpeechSynthesisUtterance(unikResponse);
+            utterance.lang = 'uk-UA';
+            speechSynthesis.speak(utterance);
+
+            // Тут потім можна буде ще вставити зміну аватара, щоб рот відкривався
+        }
+    </script>
+
 </body>
 </html>
