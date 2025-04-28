@@ -82,12 +82,12 @@
         const messagesDiv = document.getElementById('messages');
 
         function talkToUnik() {
-    const responses = [
-        "Привіт! Я допоможу тобі вибрати університет!",
-        "Я можу підказати тобі про спеціальності та бюджет.",
-        "Хочеш розповім про перспективні професії?",
-        "Я тут, щоб відповісти на твої питання!"
-    ];
+   const responses = [
+    "Hi! I will help you choose a university!",
+    "I can tell you about specialties and budget options.",
+    "Want me to tell you about future careers?",
+    "I'm here to answer your questions!"
+];
     const randomIndex = Math.floor(Math.random() * responses.length);
     const unikResponse = responses[randomIndex];
 
@@ -103,14 +103,23 @@
     console.log(voices);  // Вивести список доступних голосів в консолі
 
     // Вибір українського голосу, якщо він є
-    const ukVoice = voices.find(voice => voice.lang === 'uk-UA');
-    if (ukVoice) {
-        utterance.voice = ukVoice;
-    } else {
-        console.log("Український голос не знайдений!");
-        // Якщо український голос не знайдений, спробуємо англійський:
-        utterance.lang = 'en-US';  // Для англійської мови
-    }
+   const voices = speechSynthesis.getVoices();
+const utterance = new SpeechSynthesisUtterance(unikResponse);
+
+// Спочатку спробуємо знайти англійський голос
+const enVoice = voices.find(voice => voice.lang.includes('en'));
+
+// Якщо англійський голос знайдено — використовуємо його
+if (enVoice) {
+    utterance.voice = enVoice;
+    utterance.lang = 'en-US';
+} else {
+    console.log("Англійський голос не знайдений! Використовую дефолтний.");
+    utterance.lang = 'en-US'; // Хоча б встановлюємо мову на англійську
+}
+
+speechSynthesis.speak(utterance);
+
 
     utterance.rate = 1;  // нормальна швидкість
     utterance.pitch = 1; // нормальний тон
