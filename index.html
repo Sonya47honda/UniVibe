@@ -65,68 +65,57 @@
 <body>
 
     <header>
-        <h1>Привіт! Я Унік</h1>
+        <h1>Hi! I'm Unik</h1>
         <div class="unik-avatar">
-            <!-- Коли буде зображення — додаси шлях у src -->
             <img src="unik.png" alt="Унік" id="unik-face">
         </div>
     </header>
 
-    <button class="talk-button" onclick="talkToUnik()">Говорити з Уніком</button>
+    <button class="talk-button" onclick="talkToUnik()">Talk to Unik</button>
 
     <div class="messages" id="messages">
-        <p>Натисни кнопку, щоб поспілкуватися!</p>
+        <p>Press the button to start chatting!</p>
     </div>
 
     <script>
         const messagesDiv = document.getElementById('messages');
 
         function talkToUnik() {
-   const responses = [
-    "Hi! I will help you choose a university!",
-    "I can tell you about specialties and budget options.",
-    "Want me to tell you about future careers?",
-    "I'm here to answer your questions!"
-];
-    const randomIndex = Math.floor(Math.random() * responses.length);
-    const unikResponse = responses[randomIndex];
+            const responses = [
+                "Hi there! I can help you choose a university!",
+                "I can tell you about different majors and scholarships.",
+                "Would you like me to tell you about the most promising professions?",
+                "I'm here to answer your questions!"
+            ];
+            const randomIndex = Math.floor(Math.random() * responses.length);
+            const unikResponse = responses[randomIndex];
 
-    const p = document.createElement('p');
-    p.textContent = "Унік: " + unikResponse;
-    messagesDiv.appendChild(p);
+            const p = document.createElement('p');
+            p.textContent = "Unik: " + unikResponse;
+            messagesDiv.appendChild(p);
 
-    // Голос Уніка
-    const utterance = new SpeechSynthesisUtterance(unikResponse);
-    
-    // Перевірка доступних голосів
-    const voices = speechSynthesis.getVoices();
-    console.log(voices);  // Вивести список доступних голосів в консолі
+            // Голос Уніка
+            const utterance = new SpeechSynthesisUtterance(unikResponse);
 
-    // Вибір українського голосу, якщо він є
-   const voices = speechSynthesis.getVoices();
-const utterance = new SpeechSynthesisUtterance(unikResponse);
+            // Завантажуємо голоси тільки після першого натискання
+            const voices = speechSynthesis.getVoices();
+            const enVoice = voices.find(voice => voice.lang.includes('en'));
 
-// Спочатку спробуємо знайти англійський голос
-const enVoice = voices.find(voice => voice.lang.includes('en'));
+            if (enVoice) {
+                utterance.voice = enVoice;
+                utterance.lang = 'en-US';
+            } else {
+                console.log("English voice not found, using default voice.");
+                utterance.lang = 'en-US';
+            }
 
-// Якщо англійський голос знайдено — використовуємо його
-if (enVoice) {
-    utterance.voice = enVoice;
-    utterance.lang = 'en-US';
-} else {
-    console.log("Англійський голос не знайдений! Використовую дефолтний.");
-    utterance.lang = 'en-US'; // Хоча б встановлюємо мову на англійську
-}
+            speechSynthesis.speak(utterance);
+        }
 
-speechSynthesis.speak(utterance);
-
-
-    utterance.rate = 1;  // нормальна швидкість
-    utterance.pitch = 1; // нормальний тон
-
-    speechSynthesis.speak(utterance);
-}
-
+        // Виправлення проблеми з отриманням голосів одразу
+        if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = () => {};
+        }
     </script>
 
 </body>
