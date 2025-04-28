@@ -1,28 +1,17 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniVibe Assistant</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UniVibe Асистент</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>UniVibe Assistant</h1>
-        <p>Твій особистий помічник для вибору спеціальності та університету</p>
-    </header>
+  <h1>UniVibe</h1>
+  <p>Голосовий помічник для вибору майбутнього!</p>
 
-    <main>
-        <div class="assistant">
-            <img src="assistant.png" alt="Асистент" class="assistant-avatar">
-            <div class="chat-box" id="chatBox">
-                <p><strong>Асистент:</strong> Привіт! Чим я можу допомогти?</p>
-            </div>
-            <input type="text" id="userInput" placeholder="Постав мені запитання...">
-            <button onclick="sendMessage()">Відправити</button>
-        </div>
-    </main>
+  <button onclick="startAssistant()">Поговорити з асистентом</button>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
